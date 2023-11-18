@@ -15,6 +15,6 @@ data class MyImgsRespone(
     @SerializedName("previous")
     val previous: String?,
     @SerializedName("results")
-    val results: List<results>
+    val results: List<ImgsModel>
 )
 

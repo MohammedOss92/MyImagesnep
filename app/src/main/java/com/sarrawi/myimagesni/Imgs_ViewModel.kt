@@ -11,6 +11,11 @@ import kotlinx.coroutines.flow.toList
 import kotlinx.coroutines.launch
 import kotlinx.coroutines.withContext
 import java.io.IOException
+import androidx.lifecycle.MutableLiveData
+import androidx.lifecycle.ViewModel
+import retrofit2.Call
+import retrofit2.Callback
+import retrofit2.Response
 
 
 class Imgs_ViewModel(private val context: Context,  private val imgsRepo:ImgRepository ): ViewModel() {
@@ -95,7 +100,23 @@ class Imgs_ViewModel(private val context: Context,  private val imgsRepo:ImgRepo
     }
 
 
+    val imageModelResponse = MutableLiveData<ImgsRespone2>()
 
+    fun fetchData() {
+        imgsRepo.getSnippets().enqueue(object : Callback<ImgsRespone2> {
+            override fun onResponse(call: Call<ImgsRespone2>, response: Response<ImgsRespone2>) {
+                if (response.isSuccessful) {
+                    imageModelResponse.value = response.body()
+                } else {
+                    // معالجة الحالة غير الناجحة هنا
+                }
+            }
+
+            override fun onFailure(call: Call<ImgsRespone2>, t: Throwable) {
+                // معالجة الأخطاء هنا
+            }
+        })
+    }
 
 
 }

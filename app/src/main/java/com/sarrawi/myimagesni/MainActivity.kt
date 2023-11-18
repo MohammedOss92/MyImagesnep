@@ -54,18 +54,54 @@ class MainActivity : AppCompatActivity() {
 //        imgsViewModel.getSnippets()
 
 
-        imgsViewModel.getSnippetss().observe(this) { imgs ->
-            // الكود الحالي هنا
-            imgAdapter.stateRestorationPolicy = RecyclerView.Adapter.StateRestorationPolicy.ALLOW
-            imgAdapter.img_list = imgs
+//        imgsViewModel.getSnippetss().observe(this) { imgs ->
+//            // الكود الحالي هنا
+//            imgAdapter.stateRestorationPolicy = RecyclerView.Adapter.StateRestorationPolicy.ALLOW
+//            imgAdapter.img_list = imgs
+//
+//            if (binding.rvImgCont.adapter == null) {
+//                binding.rvImgCont.layoutManager = GridLayoutManager(this, 2)
+//                binding.rvImgCont.adapter = imgAdapter
+//            } else {
+//                imgAdapter.notifyDataSetChanged()
+//            }
+//        }
 
-            if (binding.rvImgCont.adapter == null) {
+//        imgsViewModel.imageModelResponse.observe(this, { imageModelResponse ->
+//            // قم بتحديث RecyclerView هنا باستخدام البيانات الجديدة
+//            imgAdapter.stateRestorationPolicy = RecyclerView.Adapter.StateRestorationPolicy.ALLOW
+//            imgAdapter.updateData(imageModelResponse.results)
+//            if (imageModelResponse != null) {
+//                binding.rvImgCont.layoutManager = GridLayoutManager(this, 2)
+//                binding.rvImgCont.adapter = imgAdapter
+//            }
+//
+//             else {
+//                imgAdapter.notifyDataSetChanged()
+//            }
+////            if (imageModelResponse != null) {
+////                val adapter = MyAdapter(imageModelResponse.imageModelList)
+////                recyclerView.adapter = adapter
+////            }
+//        })
+
+        imgsViewModel.imageModelResponse.observe(this) { imageModelResponse ->
+            // قم بتحديث RecyclerView هنا باستخدام البيانات الجديدة
+            imgAdapter.stateRestorationPolicy = RecyclerView.Adapter.StateRestorationPolicy.ALLOW
+
+            if (imageModelResponse != null) {
+                imgAdapter.updateData(imageModelResponse.results)
                 binding.rvImgCont.layoutManager = GridLayoutManager(this, 2)
                 binding.rvImgCont.adapter = imgAdapter
             } else {
                 imgAdapter.notifyDataSetChanged()
             }
         }
+
+
+        imgsViewModel.fetchData()
+
+
     }
 
 

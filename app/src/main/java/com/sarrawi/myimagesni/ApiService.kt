@@ -10,6 +10,7 @@ import retrofit2.http.Path
 import retrofit2.http.Query
 import okhttp3.logging.HttpLoggingInterceptor
 import okhttp3.logging.HttpLoggingInterceptor.Level
+import retrofit2.Call
 
 interface ApiService {
 
@@ -17,6 +18,9 @@ interface ApiService {
 
     @GET("/snippets")
     fun getsnippets(): Response<ImgsRespone2>
+
+    @GET("snippets") // قم بتعيين نهاية الطريق الخاصة بك
+    fun getSnipp(): Call<ImgsRespone2>
 
 
 

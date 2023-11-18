@@ -120,6 +120,7 @@ class ImgAdapter(val con: Context): RecyclerView.Adapter<ImgAdapter.ViewHolder>(
         isInternetConnected = isConnected
         notifyDataSetChanged()
     }
+
     fun updateData(newData: List<ImgsModel>) {
         img_list = newData
         notifyDataSetChanged()
