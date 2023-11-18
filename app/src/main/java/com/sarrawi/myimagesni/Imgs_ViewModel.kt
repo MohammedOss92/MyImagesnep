@@ -30,93 +30,41 @@ class Imgs_ViewModel(private val context: Context,  private val imgsRepo:ImgRepo
 
 
 
-//    fun getSnippetss(): LiveData<List<ImgsModel>> {
-//        val _imgsList = MutableLiveData<List<ImgsModel>>()
+
+
+//    val imageModelResponse = MutableLiveData<ImgsRespone2>()
 //
-//        viewModelScope.launch {
-//            try {
-//                _isLoading.postValue(true)
-//
-//                val response = imgsRepo.getsnippets_Repo()
-//
-//                when {
-//                    response.isSuccessful -> {
-//
-//                        val imgsResponse = response.body()
-//                        val results = imgsResponse?.results
-//                        _imgsList.postValue(results)
-//                        Log.i("YourViewModel", "getSnippets: posts $results")
-//                    }
-//                    else -> {
-//                        Log.i("YourViewModel", "getSnippets: data corrupted")
-//                        Log.d("tag", "getSnippets Error: ${response.code()}")
-//                        Log.d("tag", "getSnippets: ${response.body()}")
-//                    }
+//    fun fetchData() {
+//        imgsRepo.getSnippets().enqueue(object : Callback<ImgsRespone2> {
+//            override fun onResponse(call: Call<ImgsRespone2>, response: Response<ImgsRespone2>) {
+//                if (response.isSuccessful) {
+//                    imageModelResponse.value = response.body()
+//                } else {
+//                    // معالجة الحالة غير الناجحة هنا
 //                }
-//            } catch (e: Exception) {
-//                Log.e("YourViewModel", "getSnippets: Error: ${e.message}")
-//            } finally {
-//                _isLoading.postValue(false)
 //            }
-//        }
 //
-//        return _imgsList
+//            override fun onFailure(call: Call<ImgsRespone2>, t: Throwable) {
+//                // معالجة الأخطاء هنا
+//            }
+//        })
 //    }
 
+    val imageModelResponse: LiveData<ImgsRespone2?>
+        get() = _imageModelResponse
 
-
-    fun getSnippetss(): LiveData<List<ImgsModel>> {
-        val _imgsList = MutableLiveData<List<ImgsModel>>()
-
-        viewModelScope.launch {
-            try {
-                _isLoading.postValue(true)
-
-                val response = imgsRepo.getsnippets_Repoa()
-
-                withContext(Dispatchers.Main) {
-                    when {
-                        response.isSuccessful -> {
-                            val imgsResponse = response.body()
-                            val results = imgsResponse?.results
-                            _imgsList.postValue(results)
-                            Log.i("YourViewModel", "getSnippets: posts $results")
-                        }
-                        else -> {
-                            Log.i("YourViewModel", "getSnippets: data corrupted")
-                            Log.d("tag", "getSnippets Error: ${response.code()}")
-                            Log.d("tag", "getSnippets: ${response.body()}")
-                        }
-                    }
-                }
-            } catch (e: Exception) {
-                Log.e("YourViewModel", "getSnippets: Error: ${e.message}")
-            } finally {
-                _isLoading.postValue(false)
-            }
-        }
-
-        return _imgsList
-    }
-
-
-    val imageModelResponse = MutableLiveData<ImgsRespone2>()
+    private val _imageModelResponse = MutableLiveData<ImgsRespone2?>()
 
     fun fetchData() {
-        imgsRepo.getSnippets().enqueue(object : Callback<ImgsRespone2> {
-            override fun onResponse(call: Call<ImgsRespone2>, response: Response<ImgsRespone2>) {
-                if (response.isSuccessful) {
-                    imageModelResponse.value = response.body()
-                } else {
-                    // معالجة الحالة غير الناجحة هنا
-                }
-            }
-
-            override fun onFailure(call: Call<ImgsRespone2>, t: Throwable) {
+        viewModelScope.launch {
+            try {
+                _imageModelResponse.value = imgsRepo.getSnippets()
+            } catch (e: Exception) {
                 // معالجة الأخطاء هنا
             }
-        })
+        }
     }
+
 
 
 }

@@ -35,7 +35,7 @@ class MainActivity : AppCompatActivity() {
 
 
 
-    fun setupRvSnipp(){
+    fun setupRvSnipp() {
 //        imgsViewModel.imgsList.observe(this, Observer { imgsList ->
 //            // قم بتحديث RecyclerView Adapter بناءً على البيانات الجديدة
 ////            imgAdapter.submitList(imgsList)
@@ -85,25 +85,43 @@ class MainActivity : AppCompatActivity() {
 ////            }
 //        })
 
+//        imgsViewModel.imageModelResponse.observe(this) { imageModelResponse ->
+//            // قم بتحديث RecyclerView هنا باستخدام البيانات الجديدة
+//            imgAdapter.stateRestorationPolicy = RecyclerView.Adapter.StateRestorationPolicy.ALLOW
+//
+//            if (imageModelResponse != null) {
+//                imgAdapter.updateData(imageModelResponse.results)
+//                imgAdapter.differ.submitList(imageModelResponse.results)
+//                binding.rvImgCont.layoutManager = GridLayoutManager(this, 2)
+//                binding.rvImgCont.adapter = imgAdapter
+//            } else {
+//                imgAdapter.notifyDataSetChanged()
+//            }
+//        }
+//
+//
+//        imgsViewModel.fetchData()
+//
+//
+//    }
+
+// تعيين المحدث خارج كتلة التحقق
+        imgAdapter.stateRestorationPolicy = RecyclerView.Adapter.StateRestorationPolicy.ALLOW
+        binding.rvImgCont.layoutManager = GridLayoutManager(this, 2)
+        binding.rvImgCont.adapter = imgAdapter
+
         imgsViewModel.imageModelResponse.observe(this) { imageModelResponse ->
             // قم بتحديث RecyclerView هنا باستخدام البيانات الجديدة
-            imgAdapter.stateRestorationPolicy = RecyclerView.Adapter.StateRestorationPolicy.ALLOW
-
             if (imageModelResponse != null) {
                 imgAdapter.updateData(imageModelResponse.results)
-                binding.rvImgCont.layoutManager = GridLayoutManager(this, 2)
-                binding.rvImgCont.adapter = imgAdapter
+                imgAdapter.differ.submitList(imageModelResponse.results)
             } else {
                 imgAdapter.notifyDataSetChanged()
             }
         }
 
-
         imgsViewModel.fetchData()
-
-
     }
-
 
 }
 

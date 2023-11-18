@@ -16,11 +16,10 @@ interface ApiService {
 
 
 
-    @GET("/snippets")
-    fun getsnippets(): Response<ImgsRespone2>
 
     @GET("snippets") // قم بتعيين نهاية الطريق الخاصة بك
-    fun getSnipp(): Call<ImgsRespone2>
+//    fun getSnipp(): Call<ImgsRespone2>
+    fun getSnipp(): ImgsRespone2?
 
 
 

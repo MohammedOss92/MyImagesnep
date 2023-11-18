@@ -9,16 +9,11 @@ import retrofit2.Response
 class ImgRepository(val apiService: ApiService,app:Application) {
 
 
-    suspend fun getsnippets_Repoa() = apiService.getsnippets()
 
-    suspend fun getsnippets_Repo(): Response<ImgsRespone2> {
-        // استخدم نموذج البيانات لتعريف نوع الاستجابة المتوقع
-        return apiService.getsnippets()
-    }
-
-    fun getSnippets(): Call<ImgsRespone2> {
+//    fun getSnippets(): Call<ImgsRespone2> {
+    suspend fun getSnippets(): ImgsRespone2? {
         return apiService.getSnipp()
-    }
+}
 
 
 
